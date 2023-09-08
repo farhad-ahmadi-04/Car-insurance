@@ -1,66 +1,102 @@
+//                        In the name of rainbow god
+
+// Farhad Ahmadi
 // farhad.13ahmadi.83@gmail.com
+
 const carname = document.querySelector('#car')
 const result = document.querySelector('.result input')
 const main = document.querySelector('#main')
 const ansewr = document.querySelector('#ansewr')
 let InsureType = document.querySelectorAll('.InsureType input')
-console.log(InsureType);
+const thierdParty=document.querySelector('#thierdParty')
+const boduInsurance=document.querySelector('#boduInsurance')
+
 // when click on button
 result.addEventListener('click', sendToDom)
+// when click on thierd party button
+thierdParty.addEventListener("click",selectStyle)
+// when click on body insurance button
+boduInsurance.addEventListener("click",selectStyle)
 
 class Price {
-    constructor(name, carYear, type) {
+    // get user select
+    constructor(name, carYear, bodyYear, type) {
+        // car name
         this.name = name
+        // year of user dosen't damages(thierd party)
         this.carYear = carYear
+        // year of user dosen't damages(body insurance)
+        this.bodyYear = bodyYear
+        // type of insurance
         this.type = type
     }
+    // price of insurance
     userInsure() {
 
         this.name = 4241900
         return this.name
     }
+    // effect of Years without damage (thierd person)
     yearThierdPerson() {
         let price;
+        // if user dosen't  damage of 2 years, he has 5% discount
         if (this.carYear == "2 Year") {
             price = this.name * 0.05
+            // if user dosen't damage of 3 years, he has 10% discount
         } else if (this.carYear == "3 Year") {
             price = this.name * 0.10
+            // if user dosen't damage of 4 years, he has 15% discount
         } else if (this.carYear == "4 Year") {
             price = this.name * 0.15
+            // if user dosen't damage of 5 years, he has 20% discount
         } else if (this.carYear == "5 Year") {
             price = this.name * 0.20
+            // if user dosen't damage of 6 years, he has 30% discount
         } else if (this.carYear == "6 Year") {
             price = this.name * 0.30
+            // if user dosen't damage of 7 years, he has 35% discount
         } else if (this.carYear == "7 Year") {
             price = this.name * 0.35
+            // if user dosen't damage of 8 years, he has 40% discount
         } else if (this.carYear == "8 Year") {
             price = this.name * 0.40
+            // if user dosen't damage of 9 years, he has 45% discount
         } else if (this.carYear == "9 Year") {
             price = this.name * 0.45
+            // if user dosen't damage of 14 years, he has 70% discount
         } else if (this.carYear == "14 Year") {
             price = this.name * 0.70
         }
         return price
     }
+    // effect of year in insurance (body insurance)
     bodyinsurance() {
         let price;
-        if (this.carYear == "2 Year") {
+        // if user dosen't damage of 1 years, he has 30% discount
+        if (this.bodyYear == "1 Year") {
+            price = this.name * 0.30
+            // if user dosen't damage of 2 years, he has 40% discount
+        } else if (this.bodyYear == "2 Year") {
             price = this.name * 0.40
-        } else if (this.carYear == "3 Year") {
+            // if user dosen't damage of 3 years, he has 50% discount
+        } else if (this.bodyYear == "3 Year") {
             price = this.name * 0.50
-        } else if (this.carYear == "4 Year") {
+            // if user dosen't damage of 4 years, he has 60% discount
+        } else if (this.bodyYear == "4 Year") {
             price = this.name * 0.60
-        } else if (this.carYear == "5 Year") {
+            // if user dosen't damage of 5 years, he has 70% discount
+        } else if (this.bodyYear == "5 Year") {
             price = this.name * 0.70
         }
         return price
     }
+    // depend on typr of insurance
     InsureType() {
         let type = this.type
         let typeOfInsure;
         if (type == "third party") {
             typeOfInsure = this.userInsure() - this.yearThierdPerson()
-        } else if (type == "Third party and body") {
+        } else if (type == "body insurance") {
             typeOfInsure = this.userInsure() - this.bodyinsurance()
         }
         return typeOfInsure
@@ -99,7 +135,10 @@ let action = false
 function sendToDom() {
     // select value of ar name && Year of car production
     let car = document.querySelector('#car').value
+    // for third party
     let year = document.querySelector('#carYear').value
+    // for body insurance
+    let bodyYear = document.querySelector('#carYearBody').value
     // validation for user (user should fill in the box:)
     if (!InsureType[0].checked && !InsureType[1].checked) {
         alert("Please fill in the box ")
@@ -117,11 +156,37 @@ function sendToDom() {
             }
         });
 
-        let test = new Price(car, year, selectedType)
+        let test = new Price(car, year, bodyYear, selectedType)
         let test2 = test.InsureType()
 
         // set the position of the template in main element
         main.
         insertAdjacentHTML("beforeend", insure(car, year, selectedType, test2))
     }
+}
+
+
+function selectStyle() {
+    
+  // for third party
+  let year = document.querySelector('#carYear')
+  // for body insurance
+  let bodyYear = document.querySelector('#carYearBody')
+
+    let selectedType;
+    // each one radio button user choose we find next element (for send that in template)
+    InsureType.forEach(function (item) {
+        if (item.checked) {
+            selectedType = item.nextElementSibling.textContent
+        }
+        if (selectedType=="third party") {
+            bodyYear.disabled = true
+            year.disabled = false
+        } else if (selectedType== "body insurance") {
+            year.disabled = true
+            bodyYear.disabled = false
+        }{
+            
+        }
+    });
 }

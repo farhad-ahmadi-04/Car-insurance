@@ -28,10 +28,12 @@
                 <select id="car">
                     <option>پراید</option>
                     <option>206</option>
-                    <option>سمند</option>
-                    <option>R کوییک</option>
+                    <option>S کوئیک</option>
+                    <option>R کوئیک</option>
+                    <option>207</option>
                 </select>
-                <label for="carYear">Insurance discount year</label>
+                <label for="carYear">Years without damage</label>
+                <!-- for thierd party -->
                 <select id="carYear">
                     <option>2 Year</option>
                     <option>3 Year</option>
@@ -43,25 +45,33 @@
                     <option>9 Year</option>
                     <option>14 Year</option>
                 </select>
+                <!-- for body insurance -->
 
+                <select id="carYearBody">
+                    <option>1 Year</option>
+                    <option>2 Year</option>
+                    <option>3 Year</option>
+                    <option>4 Year</option>
+                    <option>5 Year</option>
+                </select>
             </div>
             <div class="InsureType">
                 <div>
-                    <input type="radio" name="asd">
+                    <input type="radio" name="asd" id="thierdParty">
                     <span>third party</span>
                 </div>
                 <div>
-                    <input type="radio" name="asd">
-                    <span>Third party and body</span>
+                    <input type="radio" name="asd" id="boduInsurance">
+                    <span>body insurance</span>
                 </div>
             </div>
             <div class="result">
-                <input type="button" class="u-full-width button-primary" value="Price" >
+                <input type="button" class="u-full-width button-primary" value="Price">
             </div>
-            
+
         </div>
 
-        
+
 
         <!-- ---------footer---------- -->
         <div id="footer" class="container row">

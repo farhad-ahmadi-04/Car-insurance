@@ -1,3 +1,4 @@
+/* section style */
 section.container {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     padding: 40px;
@@ -12,6 +13,7 @@ section.container {
 .welcome {
     text-align: center;
 }
+/* result div style */
 #ansewr{
     border-radius: 8px;
     text-align: center;
@@ -27,11 +29,12 @@ section.container {
     text-align: center;
 }
 /* ----footer start------- */
+    /* left div of footer style */
 #footer>#leftFooter {
    padding: 3px;
     text-align: center;
 }
-
+    /* right div of footer style */
 #footer>#rightFooter img {
     width: 30px;
 }
