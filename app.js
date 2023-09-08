@@ -3,6 +3,7 @@
 // Farhad Ahmadi
 // farhad.13ahmadi.83@gmail.com
 
+const section=document.querySelector("section")
 const carname = document.querySelector('#car')
 const result = document.querySelector('.result input')
 const main = document.querySelector('#main')
@@ -10,6 +11,8 @@ const ansewr = document.querySelector('#ansewr')
 let InsureType = document.querySelectorAll('.InsureType input')
 const thierdParty=document.querySelector('#thierdParty')
 const boduInsurance=document.querySelector('#boduInsurance')
+const loader=document.querySelector('.spinner')
+console.log(loader);
 
 // when click on button
 result.addEventListener('click', sendToDom)
@@ -17,6 +20,14 @@ result.addEventListener('click', sendToDom)
 thierdParty.addEventListener("click",selectStyle)
 // when click on body insurance button
 boduInsurance.addEventListener("click",selectStyle)
+
+// for loader part
+// after3.6sec this function is called
+setTimeout(() => {
+    loader.style.display = "none"
+    section.style.display="block"
+}, 3600);
+
 
 class Price {
     // get user select
@@ -99,7 +110,7 @@ class Price {
         } else if (type == "body insurance") {
             typeOfInsure = this.userInsure() - this.bodyinsurance()
         }
-        return typeOfInsure
+        return `${typeOfInsure}T`
     }
 }
 
@@ -156,16 +167,26 @@ function sendToDom() {
             }
         });
 
+        // create a new calss
         let test = new Price(car, year, bodyYear, selectedType)
+        // action the methid of class
         let test2 = test.InsureType()
 
-        // set the position of the template in main element
+
+        if (selectedType=="third party") {
+             // set the position of the template in main element
         main.
         insertAdjacentHTML("beforeend", insure(car, year, selectedType, test2))
+        } else if (selectedType=="body insurance") {
+                 // set the position of the template in main element
+        main.
+        insertAdjacentHTML("beforeend", insure(car, bodyYear, selectedType, test2))
+        }
+       
     }
 }
 
-
+// when click on radio button action the function
 function selectStyle() {
     
   // for third party
@@ -185,8 +206,6 @@ function selectStyle() {
         } else if (selectedType== "body insurance") {
             year.disabled = true
             bodyYear.disabled = false
-        }{
-            
         }
     });
 }
