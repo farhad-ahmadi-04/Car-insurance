@@ -20,8 +20,8 @@
     -  9 years = 40%
     -  14 years = 70%
   -  car body insurance:
-    -  1 year = 30%
-    -  2 years = 40%
-    -  3 years = 50%
-    -  4 years = 60%
-    -  5 years = 70%
+      -  1 year = 30%
+      -  2 years = 40%
+      -  3 years = 50%
+      -  4 years = 60%
+      -  5 years = 70%
