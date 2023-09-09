@@ -64,16 +64,16 @@ class Price {
             price = this.name * 0.20
             // if user dosen't damage of 6 years, he has 30% discount
         } else if (this.carYear == "6 Year") {
-            price = this.name * 0.30
+            price = this.name * 0.25
             // if user dosen't damage of 7 years, he has 35% discount
         } else if (this.carYear == "7 Year") {
-            price = this.name * 0.35
+            price = this.name * 0.30
             // if user dosen't damage of 8 years, he has 40% discount
         } else if (this.carYear == "8 Year") {
-            price = this.name * 0.40
+            price = this.name * 0.35
             // if user dosen't damage of 9 years, he has 45% discount
         } else if (this.carYear == "9 Year") {
-            price = this.name * 0.45
+            price = this.name * 0.40
             // if user dosen't damage of 14 years, he has 70% discount
         } else if (this.carYear == "14 Year") {
             price = this.name * 0.70
