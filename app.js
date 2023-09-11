@@ -50,8 +50,11 @@ class Price {
     // effect of Years without damage (thierd person)
     yearThierdPerson() {
         let price;
-        // if user dosen't  damage of 2 years, he has 5% discount
-        if (this.carYear == "2 Year") {
+        // if user dosen't  damage of 0 years, he has 0% discount
+        if (this.carYear == "0 Year"){
+            price = 0
+            // if user dosen't  damage of 2 years, he has 5% discount
+        }else if (this.carYear == "2 Year") {
             price = this.name * 0.05
             // if user dosen't damage of 3 years, he has 10% discount
         } else if (this.carYear == "3 Year") {
@@ -62,16 +65,16 @@ class Price {
             // if user dosen't damage of 5 years, he has 20% discount
         } else if (this.carYear == "5 Year") {
             price = this.name * 0.20
-            // if user dosen't damage of 6 years, he has 30% discount
+            // if user dosen't damage of 6 years, he has 25% discount
         } else if (this.carYear == "6 Year") {
             price = this.name * 0.25
-            // if user dosen't damage of 7 years, he has 35% discount
+            // if user dosen't damage of 7 years, he has 30% discount
         } else if (this.carYear == "7 Year") {
             price = this.name * 0.30
-            // if user dosen't damage of 8 years, he has 40% discount
+            // if user dosen't damage of 8 years, he has 35% discount
         } else if (this.carYear == "8 Year") {
             price = this.name * 0.35
-            // if user dosen't damage of 9 years, he has 45% discount
+            // if user dosen't damage of 9 years, he has 40% discount
         } else if (this.carYear == "9 Year") {
             price = this.name * 0.40
             // if user dosen't damage of 14 years, he has 70% discount
@@ -83,8 +86,11 @@ class Price {
     // effect of year in insurance (body insurance)
     bodyinsurance() {
         let price;
-        // if user dosen't damage of 1 years, he has 30% discount
-        if (this.bodyYear == "1 Year") {
+        // if user dosen't  damage of 0 years, he has 0% discount
+        if (this.bodyYear == "0 Year"){
+            price = 0
+            // if user dosen't damage of 1 years, he has 30% discount
+        }else if (this.bodyYear == "1 Year") {
             price = this.name * 0.30
             // if user dosen't damage of 2 years, he has 40% discount
         } else if (this.bodyYear == "2 Year") {
