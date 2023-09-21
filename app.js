@@ -116,7 +116,7 @@ class Price {
         } else if (type == "body insurance") {
             typeOfInsure = this.userInsure() - this.bodyinsurance()
         }
-        return `${typeOfInsure}T`
+        return `${typeOfInsure} T`
     }
 }
 

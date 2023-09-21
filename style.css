@@ -1,5 +1,5 @@
 
-/* loader style start-------------- */
+/* loading style start-------------- */
 .spinner {
   position: absolute;
   width: 9px;
@@ -87,6 +87,7 @@
     transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1.5%));
   }
 }
+/* loading style end--------- */
 
 /* ---------section style------------ */
 section.container {
@@ -106,6 +107,18 @@ section.container {
     text-align: center;
 }
 /* result div style */
+#car,
+#carYear,
+#carYearBody{
+  width: 40%;
+}
+
+#car ,
+#carYear ,
+#carYearBody {
+  transition: all 1s;
+} 
+
 #ansewr{
     border-radius: 8px;
     text-align: center;
