@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class-car-insurance</title>
+
+    <link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container" id="carInsurance">
+        <div class="header">
+            <h1 class="p-3 text-bg-primary text-center">محاسبه آنلاین قیمت بیمه خودرو</h1>
+        </div>
+        <form action="#" class="p-4">
+            <div>
+                <label for="car">مدل خودرو</label>
+                <select name="carName" class="p-2" id="car">
+                    <option>پراید</option>
+                    <option>پورشه</option>
+                    <option>اپتیما</option>
+                </select>
+            </div>
+            <div>
+                <label for="carYear">سال ساخت</label>
+                <select name="year" id="carYear">
+                    <!-- <option value=""></option> -->
+                </select>
+            </div>
+            <div class="p-2">
+                <label for="typeIncurance">بیمه</label>
+                <div>
+                    <input type="radio" name="type" id="typeIncurance" class="typeInput">
+                    <span>ساده - شخص ثالث</span>
+                </div>
+                <div>
+                    <input type="radio" name="type" id="typeIncurance" class="typeInput">
+                    <span>کامل - شخص ثالث و بیمه بدنه</span>
+                </div>
+            </div>
+            <input type="button" value="محاسبه قیمت" class="text-bg-primary border p-3" id="factor">
+        </form>
+        <div class="factorPrice text-center"></div>
+    </div>
+
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>
