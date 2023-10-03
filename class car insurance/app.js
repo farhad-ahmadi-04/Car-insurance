@@ -18,6 +18,8 @@ facto.addEventListener("click", () => {
     typeInsurance()
     // tempalte of factor
     factorInsuranceToDom()
+
+    formulInsurance()
 })
 // DOM functions
 
@@ -54,17 +56,20 @@ function error(params) {
 
 // Computational functions
 function carPrice() {
-    const carName = car.textContent
+    let carName = car.textContent
     if (carName = "پراید") {
         return 1.15
     } else if (carName = "پورشه") {
         return 1.80
+    } else if (carName == "اپتیما") {
+        return 2
     }
 }
 
 function getYearsNow(params) {
     // get new date and just year
     let year = new Date().getFullYear()
+    console.log(year);
     return year
 }
 
@@ -84,8 +89,17 @@ function get20YearsAgo(params) {
 // action the function
 get20YearsAgo()
 
-function changeYearToShamsi(params) {
+function findeYearValue(params) {
+    let yearCar = carYear.options[carYear.selectedIndex].text
 
+    let x = 0
+    for (let i = 2023; i >= 2003; i--) {
+        x += 0.5
+        if (yearCar == i) {
+            return x
+        }
+
+    }
 }
 
 
@@ -93,24 +107,35 @@ let typeInsuranseChecked;
 
 function typeInsurance() {
     // each input user select, find next element text contain
+    let y
     typeInput.forEach((item) => {
         if (item.checked) {
             typeInsuranseChecked = item.nextElementSibling.textContent
             // if text conent be that return 30
             if (typeInsuranseChecked == "ساده - شخص ثالث") {
-                console.log(30);
-                return 30
+                y = 30
             }
             // if text conent be that return 50
             if (typeInsuranseChecked == "کامل - شخص ثالث و بیمه بدنه") {
-                console.log(50);
-                return 50
+                y = 50
             }
+            console.log(y);
+            return y
         }
     });
 }
 
 
-function formulInsurance(params) {
+function formulInsurance() {
+    // base insurance
+    let base = 2000000;
+    // price of car * base
+    let mashin = carPrice() * base
+    let takhfif = (mashin * findeYearValue()) / 100
+    let x = mashin - takhfif
+    let incruse = (base * typeInsurance()) / 100
+    console.log(typeInsurance());
 
+    let factor = x + incruse
+    console.log(factor);
 }
