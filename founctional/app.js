@@ -66,36 +66,54 @@ function carPrice() {
     }
 }
 
-function getYearsNow(params) {
+function getYearsNow() {
     // get new date and just year
-    let year = new Date().getFullYear()
-    console.log(year);
-    return year
+    let year = new Date().toLocaleDateString('fa-IR')
+
+    let persianYear = year.slice(0, 4)
+
+    let
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+        fixNumbers = function (str) {
+            if (typeof str === 'string') {
+                for (var i = 0; i < 10; i++) {
+                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                }
+            }
+            return str;
+        };
+
+    let maxYear = parseInt(fixNumbers(persianYear))
+
+    return maxYear
 }
 
 // finde 20 years ago
 function get20YearsAgo(params) {
     // select new year
-    let x = getYearsNow()
-    // send new year to DOM
-    carYear.insertAdjacentHTML("beforeend", yearTemplate(x))
+    let maxYear = getYearsNow()
+    let minYear = getYearsNow() - 20
+    console.log(minYear);
+
     // with for method we find 20 years age
-    for (let i = 0; i < 20; i++) {
-        // every time year - 1, sending toDOM
-        x -= 1
-        carYear.insertAdjacentHTML("beforeend", yearTemplate(x))
+    for (let i = maxYear; i >= minYear; i--) {
+        carYear.insertAdjacentHTML("beforeend", yearTemplate(i))
     }
 }
 // action the function
 get20YearsAgo()
 
 function findeYearValue(params) {
+    let maxYear = getYearsNow()
+    let minYear = getYearsNow() - 20
     let yearCar = carYear.options[carYear.selectedIndex].text
 
     let x = 0
-    for (let i = 2023; i >= 2003; i--) {
+    for (let i = maxYear; i >= minYear; i--) {
         x += 0.5
         if (yearCar == i) {
+            console.log(x);
             return x
         }
 
@@ -107,21 +125,21 @@ let typeInsuranseChecked;
 
 function typeInsurance() {
     // each input user select, find next element text contain
-    let y
     typeInput.forEach((item) => {
         if (item.checked) {
             typeInsuranseChecked = item.nextElementSibling.textContent
             // if text conent be that return 30
             if (typeInsuranseChecked == "ساده - شخص ثالث") {
-                y = 30
+                return 30
+
             }
             // if text conent be that return 50
             if (typeInsuranseChecked == "کامل - شخص ثالث و بیمه بدنه") {
-                y = 50
+                return 50
             }
             console.log(y);
-            return y
         }
+
     });
 }
 
@@ -133,6 +151,7 @@ function formulInsurance() {
     let mashin = carPrice() * base
     let takhfif = (mashin * findeYearValue()) / 100
     let x = mashin - takhfif
+    console.log(x);
     let incruse = (base * typeInsurance()) / 100
     console.log(typeInsurance());
 
