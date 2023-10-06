@@ -1,13 +1,39 @@
 // varibales
+const form = document.querySelector("#request-quote");
 
 
 
 // event
-
+document.addEventListener("DOMContentLoaded", afterLoad);
+form.addEventListener("submit", checkSubmit);
 
 
 // functions
-function year() {
+// for loading the page 
+function afterLoad() {
+    displayYears()
+}
+
+// validation for checking form
+function checkSubmit(e) {
+    // not load when submit form
+    e.preventDefault();
+    // select values
+    const make = document.querySelector("#make").value
+    const year = document.querySelector("#year").value
+    const level = document.querySelector("input[name='level']:checked")
+
+    // check form validity
+    if (make === "" || year === "" || level === "") {
+        console.log("error :(");
+    } else {
+        console.log("allRight :)");
+    }
+
+
+}
+
+function displayYears() {
 
     // new date
     let now = new Date().toLocaleDateString('fa-IR')
@@ -56,4 +82,3 @@ function year() {
 
 
 }
-year()
