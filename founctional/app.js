@@ -20,9 +20,14 @@ function loadPage() {
 }
 
 
-function checkForm() {
-    // if user dosen't choose type of insurance
-    if (!typeInput[0].checked && !typeInput[1].checked) {
+function checkForm(e) {
+    e.preventDefault();
+
+    const carType = car.value
+    const year = carYear.value
+    const level = document.querySelector(".typeInput[name='type']:checked").value
+    // condition of form
+    if (carType === "" || year === "" || level === "") {
         alert("Please fill the box ")
         // if dosen't fill in the box function dosen't work 'cuase of (return)
         return
@@ -47,7 +52,7 @@ function factorInsurance(carType, carYear, insuranceType, price) {
 }
 // sending factor template to DOM
 function factorInsuranceToDom() {
-    let carModel = car.value
+    let carModel = car.options[car.selectedIndex].text;
     let carYears = carYear.value
     // made div in show that in the div (after buytton )
     factorPrice.innerHTML = factorInsurance(carModel, carYears, typeInsuranseChecked)
@@ -121,36 +126,20 @@ function findeYearValue(params) {
 let typeInsuranseChecked;
 
 function typeInsurance() {
-    // each input user select, find next element text contain
-    typeInput.forEach((item) => {
-        if (item.checked) {
-            typeInsuranseChecked = item.nextElementSibling.textContent
-            // if text conent be that return 30
-            if (typeInsuranseChecked == "ساده - شخص ثالث") {
-                return 30
+    const level = document.querySelector(".typeInput[name='type']:checked")
 
-            }
-            // if text conent be that return 50
-            if (typeInsuranseChecked == "کامل - شخص ثالث و بیمه بدنه") {
-                return 50
-            }
+    if (level) {
+        typeInsuranseChecked = level.nextElementSibling.textContent
+        console.log(typeInsuranseChecked);
+        if (level.vale = "base") {
+            console.log(30);
+        } else {
+            console.log(50);
         }
-
-    });
+    }
 }
 
 
 function formulInsurance() {
-    // base insurance
-    let base = 2000000;
-    // price of car * base
-    let mashin = carPrice() * base
-    let takhfif = (mashin * findeYearValue()) / 100
-    let x = mashin - takhfif
-    console.log(x);
-    let incruse = (base * typeInsurance()) / 100
-    console.log(typeInsurance());
 
-    let factor = x + incruse
-    console.log(factor);
 }
