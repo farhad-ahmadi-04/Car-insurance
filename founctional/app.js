@@ -3,10 +3,24 @@ const car = document.querySelector('#car');
 const carYear = document.querySelector("#carYear")
 const typeInput = document.querySelectorAll(".typeInput")
 const factorPrice = document.querySelector(".factorPrice")
-
-
+const form = document.querySelector("#form")
 const facto = document.querySelector("#factor")
-facto.addEventListener("click", () => {
+
+
+// event
+form.addEventListener("submit", checkForm)
+document.addEventListener("DOMContentLoaded", loadPage)
+
+
+// founctions
+
+function loadPage() {
+    // action the function
+    get20YearsAgo()
+}
+
+
+function checkForm() {
     // if user dosen't choose type of insurance
     if (!typeInput[0].checked && !typeInput[1].checked) {
         alert("Please fill the box ")
@@ -20,7 +34,7 @@ facto.addEventListener("click", () => {
     factorInsuranceToDom()
 
     formulInsurance()
-})
+}
 // DOM functions
 
 // template of insurance factor
@@ -39,31 +53,12 @@ function factorInsuranceToDom() {
     factorPrice.innerHTML = factorInsurance(carModel, carYears, typeInsuranseChecked)
 }
 // send years to select element
-function yearTemplate(year) {
-    return `<option value="">${year}</option>`
+function yearTemplate(value, year) {
+    return `<option value="${value}">${year}</option>`
 }
 
 function loading(params) {
 
-}
-// error function
-function error(params) {
-    // if user dosen't choose type of insurance
-    alert("Please fill in the box ")
-    // if dosen't fill in the box function dosen't work 'cuase of (return)
-    return
-}
-
-// Computational functions
-function carPrice() {
-    let carName = car.textContent
-    if (carName = "پراید") {
-        return 1.15
-    } else if (carName = "پورشه") {
-        return 1.80
-    } else if (carName == "اپتیما") {
-        return 2
-    }
 }
 
 function getYearsNow() {
@@ -94,15 +89,17 @@ function get20YearsAgo(params) {
     // select new year
     let maxYear = getYearsNow()
     let minYear = getYearsNow() - 20
-    console.log(minYear);
+
+    carYear.insertAdjacentHTML("beforeend", yearTemplate("", "انتخاب سال"))
+
+
 
     // with for method we find 20 years age
     for (let i = maxYear; i >= minYear; i--) {
-        carYear.insertAdjacentHTML("beforeend", yearTemplate(i))
+        carYear.insertAdjacentHTML("beforeend", yearTemplate(i, `${i} سال`))
     }
 }
-// action the function
-get20YearsAgo()
+
 
 function findeYearValue(params) {
     let maxYear = getYearsNow()
@@ -137,7 +134,6 @@ function typeInsurance() {
             if (typeInsuranseChecked == "کامل - شخص ثالث و بیمه بدنه") {
                 return 50
             }
-            console.log(y);
         }
 
     });

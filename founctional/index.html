@@ -15,13 +15,13 @@
         <div class="header">
             <h1 class="p-3 text-bg-primary text-center">محاسبه آنلاین قیمت بیمه خودرو</h1>
         </div>
-        <form action="#" class="p-4">
+        <form action="#" class="p-4" id="form">
             <div>
                 <label for="car">مدل خودرو</label>
                 <select name="carName" class="p-2" id="car">
-                    <option>پراید</option>
-                    <option>پورشه</option>
-                    <option>اپتیما</option>
+                    <option value="1">پراید</option>
+                    <option value="2">پورشه</option>
+                    <option value="3">اپتیما</option>
                 </select>
             </div>
             <div>
@@ -33,7 +33,7 @@
             <div class="p-2">
                 <label for="typeIncurance">بیمه</label>
                 <div>
-                    <input type="radio" name="type" id="typeIncurance" class="typeInput">
+                    <input type="radio" name="type" id="typeIncurance" class="typeInput" checked>
                     <span>ساده - شخص ثالث</span>
                 </div>
                 <div>
@@ -41,7 +41,7 @@
                     <span>کامل - شخص ثالث و بیمه بدنه</span>
                 </div>
             </div>
-            <input type="button" value="محاسبه قیمت" class="text-bg-primary border p-3" id="factor">
+            <input type="submit" value="محاسبه قیمت" class="text-bg-primary border p-3 w-100" id="factor">
         </form>
         <div class="factorPrice text-center"></div>
     </div>
