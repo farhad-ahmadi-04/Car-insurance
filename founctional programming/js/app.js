@@ -16,7 +16,7 @@ function afterLoad() {
 }
 
 function displayYears() {
-    let minYear = maxYear() - 20
+    let minYear = currentYear() - 20
 
     const selectYear = document.querySelector('#year')
 
@@ -39,7 +39,7 @@ function defaultYear(selectYear) {
 
 // years for pass to DOM
 function years(selectYear, min) {
-    for (let i = maxYear(); i >= min; i--) {
+    for (let i = currentYear(); i >= min; i--) {
         // create option element
         let creartOption = document.createElement('option')
         // pass value to option
@@ -52,28 +52,33 @@ function years(selectYear, min) {
 }
 
 // find now year
-function maxYear() {
+function currentYear() {
     // new date
     let now = new Date().toLocaleDateString('fa-IR')
     // get full persion year
     now.slice(0, 4)
-    // change persion string to english number
-    let
-        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
-        fixNumbers = function (str) {
-            if (typeof str === 'string') {
-                for (var i = 0; i < 10; i++) {
-                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-                }
-            }
-            return str;
-        };
+
     // max year
-    let maxYear = parseInt(fixNumbers(now))
+    let maxYear = parseInt(englishNumber(now))
     return maxYear
 
 }
+
+// change persion string to english number
+//  get !english max year number
+// give english number
+function englishNumber(str) {
+    let
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g]
+    if (typeof str === 'string') {
+        for (var i = 0; i < 10; i++) {
+            str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+        }
+    }
+    return str;
+}
+
 // validation for checking form
 function checkSubmit(e) {
     // not load when submit form
@@ -130,37 +135,66 @@ function calculatePrice(info) {
         base = 2000000
 
     // price
-    price = CalculateCar(price, base, info) - ((diffrence(info) * 3) / 100) * CalculateCar(price, base, info)
+    price = (CalculateCar(price, base, info) - ((yearDiscount(info) * 3) / 100) * CalculateCar(price, base, info)) * CalculateLevl(info)
     console.log(price);
 }
 
 // price of car
 function CalculateCar(price, base, info) {
+
+
+    switch (info.carMake) {
+        case "1":
+            price = base * calculateOfCar(info)
+            break;
+
+        case "2":
+            price = base * calculateOfCar(info)
+            break;
+        case "3":
+            price = base * calculateOfCar(info)
+            break;
+    }
+    return price
+}
+
+// Discount of year
+// get object from insuranceCase()
+// give year of discount
+function yearDiscount(info) {
+    let year = info.carYear
+    year = currentYear() - year
+    return year
+}
+
+function calculateOfCar(info) {
     // + Calculate Make 
     /* 
     make:1      =>      1.15
     make:2      =>      1.30
     make:3      =>      1.80
     */
-
-    switch (info.carMake) {
+    let carValue = info.carMake
+    switch (carValue) {
         case "1":
-            price = base * 1.15
-            break;
-
+            return 1.15
         case "2":
-            price = base * 1.30
-            break;
+            return 1.30
         case "3":
-            price = base * 1.80
-            break;
+            return 1.80
     }
-    return price
 }
 
-// price of year
-function diffrence(info) {
-    let year = info.carYear
-    year = maxYear() - year
-    return year
+function CalculateLevl(info) {
+    /*
+           basic   =>  increase 30%
+           complete=>  increase 50%
+       */
+    let level = info.level
+    if (level == 'basic') {
+        // price = price + (price * 0.30)
+        return 1.3
+    } else {
+        return 1.5
+    }
 }

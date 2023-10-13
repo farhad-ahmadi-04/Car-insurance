@@ -100,9 +100,28 @@ function calculatePrice(info) {
 
     // price
     price = price - ((diffrence(year) * 3) / 100) * price
+
+
+    let level = info.level
+    price = calculateLevel(level, price)
     console.log(price);
 
 
+}
+
+function calculateLevel(level, price) {
+    /*
+        basic   =>  increase 30%
+        complete=>  increase 50%
+    */
+
+    if (level == 'basic') {
+        // price = price + (price * 0.30) (bara mehrdad)
+        price = price * 1.3
+    } else {
+        price = price * 1.5
+    }
+    return price
 }
 // error function
 
