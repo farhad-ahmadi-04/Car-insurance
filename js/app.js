@@ -1,217 +1,195 @@
-//                        In the name of rainbow god
-
-// Farhad Ahmadi
-// farhad.13ahmadi.83@gmail.com
-
-const section=document.querySelector("section")
-const carname = document.querySelector('#car')
-const result = document.querySelector('.result input')
-const main = document.querySelector('#main')
-const ansewr = document.querySelector('#ansewr')
-let InsureType = document.querySelectorAll('.InsureType input')
-const thierdParty=document.querySelector('#thierdParty')
-const boduInsurance=document.querySelector('#boduInsurance')
-const loader=document.querySelector('.spinner')
-console.log(loader);
-
-// when click on button
-result.addEventListener('click', sendToDom)
-// when click on thierd party button
-thierdParty.addEventListener("click",selectStyle)
-// when click on body insurance button
-boduInsurance.addEventListener("click",selectStyle)
-
-// for loader part
-// after3.6sec this function is called
-setTimeout(() => {
-    loader.style.display = "none"
-    section.style.display="block"
-}, 3600);
+// varibales
+const form = document.querySelector("#request-quote");
 
 
-class Price {
-    // get user select
-    constructor(name, carYear, bodyYear, type) {
-        // car name
-        this.name = name
-        // year of user dosen't damages(thierd party)
-        this.carYear = carYear
-        // year of user dosen't damages(body insurance)
-        this.bodyYear = bodyYear
-        // type of insurance
-        this.type = type
-    }
-    // price of insurance
-    userInsure() {
 
-        this.name = 4241900
-        return this.name
-    }
-    // effect of Years without damage (thierd person)
-    yearThierdPerson() {
-        let price;
-        // if user dosen't  damage of 0 years, he has 0% discount
-        if (this.carYear == "0 Year"){
-            price = 0
-            // if user dosen't  damage of 2 years, he has 5% discount
-        }else if (this.carYear == "2 Year") {
-            price = this.name * 0.05
-            // if user dosen't damage of 3 years, he has 10% discount
-        } else if (this.carYear == "3 Year") {
-            price = this.name * 0.10
-            // if user dosen't damage of 4 years, he has 15% discount
-        } else if (this.carYear == "4 Year") {
-            price = this.name * 0.15
-            // if user dosen't damage of 5 years, he has 20% discount
-        } else if (this.carYear == "5 Year") {
-            price = this.name * 0.20
-            // if user dosen't damage of 6 years, he has 25% discount
-        } else if (this.carYear == "6 Year") {
-            price = this.name * 0.25
-            // if user dosen't damage of 7 years, he has 30% discount
-        } else if (this.carYear == "7 Year") {
-            price = this.name * 0.30
-            // if user dosen't damage of 8 years, he has 35% discount
-        } else if (this.carYear == "8 Year") {
-            price = this.name * 0.35
-            // if user dosen't damage of 9 years, he has 40% discount
-        } else if (this.carYear == "9 Year") {
-            price = this.name * 0.40
-            // if user dosen't damage of 14 years, he has 70% discount
-        } else if (this.carYear == "14 Year") {
-            price = this.name * 0.70
+// event
+document.addEventListener("DOMContentLoaded", afterLoad);
+form.addEventListener("submit", checkSubmit);
+
+
+// functions
+// for loading the page 
+function afterLoad() {
+    displayYears()
+}
+
+// validation for checking form
+function checkSubmit(e) {
+    // not load when submit form
+    e.preventDefault();
+    // select values
+    const make = document.querySelector("#make").value
+    const year = document.querySelector("#year").value
+    const level = document.querySelector("input[name='level']:checked").value
+
+    // check form validity
+    if (make === "" || year === "" || level === "") {
+        console.log("error :(");
+        displayError("لطفا فرم را کامل پر کنید")
+    } else {
+        // console.log(insuranceCase(make, year, level.value));
+
+        let insuranse = {
+            make: make,
+            year: year,
+            level: level
         }
-        return price
+        calculatePrice(insuranse)
     }
-    // effect of year in insurance (body insurance)
-    bodyinsurance() {
-        let price;
-        // if user dosen't  damage of 0 years, he has 0% discount
-        if (this.bodyYear == "0 Year"){
-            price = 0
-            // if user dosen't damage of 1 years, he has 30% discount
-        }else if (this.bodyYear == "1 Year") {
-            price = this.name * 0.30
-            // if user dosen't damage of 2 years, he has 40% discount
-        } else if (this.bodyYear == "2 Year") {
-            price = this.name * 0.40
-            // if user dosen't damage of 3 years, he has 50% discount
-        } else if (this.bodyYear == "3 Year") {
-            price = this.name * 0.50
-            // if user dosen't damage of 4 years, he has 60% discount
-        } else if (this.bodyYear == "4 Year") {
-            price = this.name * 0.60
-            // if user dosen't damage of 5 years, he has 70% discount
-        } else if (this.bodyYear == "5 Year") {
-            price = this.name * 0.70
-        }
-        return price
+}
+
+// value of form
+// function insuranceCase(inCarMake, inYear, inLevel) {
+//     return {
+//         carMake: inCarMake,
+//         Yera: inYear,
+//         level: inLevel
+//     }
+// }
+
+
+function calculatePrice(info) {
+    let price = 0,
+        base = 2000000
+    // + Calculate Make 
+    /* 
+    make:1      =>      1.15
+    make:2      =>      1.30
+    make:3      =>      1.80
+    */
+
+    switch (info.make) {
+        case "1":
+            price = base * 1.15
+            break;
+
+        case "2":
+            price = base * 1.30
+            break;
+        case "3":
+            price = base * 1.80
+            break;
     }
-    // depend on typr of insurance
-    InsureType() {
-        let type = this.type
-        let typeOfInsure;
-        if (type == "third party") {
-            typeOfInsure = this.userInsure() - this.yearThierdPerson()
-        } else if (type == "body insurance") {
-            typeOfInsure = this.userInsure() - this.bodyinsurance()
-        }
-        return `${typeOfInsure} T`
+
+    // + Calculate Year
+    // get the year
+
+    // change persion string to english number
+    let year = info.year
+    diffrence = function (year) {
+        let
+            persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let now = new Date().toLocaleDateString("fa-IR");
+        let nowYear = now.slice(0, 4)
+        let max = parseInt(fixNumbers(nowYear))
+
+
+        year = max - year
+        return year
     }
+
+    // price
+    price = price - ((diffrence(year) * 3) / 100) * price
+
+
+    let level = info.level
+    price = calculateLevel(level, price)
+    console.log(price);
+
+
+}
+
+function calculateLevel(level, price) {
+    /*
+        basic   =>  increase 30%
+        complete=>  increase 50%
+    */
+
+    if (level == 'basic') {
+        // price = price + (price * 0.30) (bara mehrdad)
+        price = price * 1.3
+    } else {
+        price = price * 1.5
+    }
+    return price
+}
+// error function
+
+function displayError(msg) {
+    // creat div
+    const errorDiv = document.createElement("div")
+    // add class to div
+    errorDiv.classList = "error"
+    // pass massage to div
+    errorDiv.innerText = msg
+    // pass div to DOM
+    form.insertBefore(errorDiv, document.querySelector(".form-group"))
+    // after 5sec remove class 
+    setTimeout(() => {
+        // remov class from error div
+        document.querySelector(".error").remove()
+    }, 5000);
 }
 
 
 
-// create template
-function insure(car, year, type, price) {
-    return `
-    <div id="ansewr">
-    <h5>Your insurance</h5>
-    <div>
-    <span class="car">${car}</span>
-    <span>: Car name</span>
-    </div>
-    <div>
-    <span class="year">${year}</span>
-    <span>: Insurance discount year</span>
-    </div>
-    <div>
-    <span class="type">${type}</span>
-    <span>: Type of insurance</span>
-    </div>
-    <hr />
-    <div class="price">
-    <h6>${price}</h6>
-    </div>
-    </div>
-`
-}
-// for action just for on time
-let action = false
-// function for send all of them to DOM
-function sendToDom() {
-    // select value of ar name && Year of car production
-    let car = document.querySelector('#car').value
-    // for third party
-    let year = document.querySelector('#carYear').value
-    // for body insurance
-    let bodyYear = document.querySelector('#carYearBody').value
-    // validation for user (user should fill in the box:)
-    if (!InsureType[0].checked && !InsureType[1].checked) {
-        alert("Please fill in the box ")
-        // if dosen't fill in the box function dosen't work 'cuase of (return)
-        return
-    }
-    //   if for action the function for one time
-    if (!action) {
-        action = true
-        let selectedType;
-        // each one radio button user choose we find next element (for send that in template)
-        InsureType.forEach(function (item) {
-            if (item.checked) {
-                selectedType = item.nextElementSibling.textContent
+function displayYears() {
+
+    // new date
+    let now = new Date().toLocaleDateString('fa-IR')
+    // get full persion year
+    now.slice(0, 4)
+
+    // change persion string to english number
+
+    let
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+        fixNumbers = function (str) {
+            if (typeof str === 'string') {
+                for (var i = 0; i < 10; i++) {
+                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                }
             }
-        });
+            return str;
+        };
 
-        // create a new calss
-        let test = new Price(car, year, bodyYear, selectedType)
-        // action the methid of class
-        let test2 = test.InsureType()
+    // max year
+    let maxYear = parseInt(fixNumbers(now))
+    // min year
+    let minYear = maxYear - 20
 
+    const selectYear = document.querySelector('#year')
 
-        if (selectedType=="third party") {
-             // set the position of the template in main element
-        main.
-        insertAdjacentHTML("beforeend", insure(car, year, selectedType, test2))
-        } else if (selectedType=="body insurance") {
-                 // set the position of the template in main element
-        main.
-        insertAdjacentHTML("beforeend", insure(car, bodyYear, selectedType, test2))
-        }
-       
+    // creat optin for select
+    let creartOption = document.createElement('option')
+    // pass empty value to option
+    creartOption.value = ""
+    // pass defult text to option
+    creartOption.innerText = `- انتخاب کن-`
+    // send option to select
+    selectYear.appendChild(creartOption)
+    // create loop for find years
+    for (let i = maxYear; i >= minYear; i--) {
+        // create option element
+        let creartOption = document.createElement('option')
+        // pass value to option
+        creartOption.value = i
+        // pass text to option element
+        creartOption.innerText = `سال ${i}`
+        // send option to select element
+        selectYear.appendChild(creartOption)
     }
-}
 
-// when click on radio button action the function
-function selectStyle() {
-    
-  // for third party
-  let year = document.querySelector('#carYear')
-  // for body insurance
-  let bodyYear = document.querySelector('#carYearBody')
 
-    let selectedType;
-    // each one radio button user choose we find next element (for send that in template)
-    InsureType.forEach(function (item) {
-        if (item.checked) {
-            selectedType = item.nextElementSibling.textContent
-        }
-        if (selectedType=="third party") {
-            bodyYear.disabled = true
-            year.disabled = false
-        } else if (selectedType== "body insurance") {
-            year.disabled = true
-            bodyYear.disabled = false
-        }
-    });
 }
