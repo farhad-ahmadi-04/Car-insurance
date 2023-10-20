@@ -105,13 +105,20 @@ function englishNumber(str) {
 function checkSubmit(e) {
     // not refresh page when submit the form
     e.preventDefault();
-    // select values
-    const make = document.querySelector("#make").value
-    const year = document.querySelector("#year").value
-    const level = document.querySelector("input[name='level']:checked").value
 
+    // selects
+    let make = document.querySelector("#make").value
+    let makeText = textCar(make)
+    let year = document.querySelector("#year").value
+    let level = document.querySelector("input[name='level']:checked").value
+    let levelText = "";
+    if (level == "basic") {
+        levelText = "ساده"
+    } else {
+        levelText = "کامل"
+    }
     // check form validity
-    afterCheckForm(make, year, level)
+    afterCheckForm(make, makeText, year, level, levelText)
 }
 
 // validation form
@@ -134,9 +141,9 @@ function validaition(make, year, level) {
 // parameter2 : the value of year
 // parameter3 : the value of type of insurance
 // parameter4 : the error message
-function afterCheckForm(make, year, level, error = "لصفا فرم را پر کنید") {
+function afterCheckForm(make, makeText, year, level, levelText, error = "لصفا فرم را پر کنید") {
     if (validaition(make, year, level)) {
-        insuranceCase(make, year, level)
+        insuranceCase(make, year, level, makeText, levelText)
     } else {
         displayError(error)
     }
@@ -165,14 +172,16 @@ function displayError(msg) {
 // + parameter1 : value of car input
 // + parameter2 : value of year input
 // + parameter3 : value of type of insutance
-function insuranceCase(inCarMake, inYear, inLevel) {
+function insuranceCase(inCarMake, inYear, inLevel, makeText, levelText) {
     let info = {
-        carMake: inCarMake,
-        carYear: inYear,
-        level: inLevel
+        makeValue: inCarMake,
+        carText: makeText,
+        year: inYear,
+        levelValue: inLevel,
+        textLevel: levelText
     }
     // pass object to calculatePrice function
-    calculatePrice(info)
+    showFactor(calculatePrice(info), info)
 }
 
 // price of insurance
@@ -183,7 +192,7 @@ function calculatePrice(info) {
         base = config.prices.basePrice
     // formula for insurance
     price = (CalculateCar(price, base, info) - ((yearDiscount(info) * 3) / 100) * CalculateCar(price, base, info)) * CalculateLevl(info)
-    console.log(price);
+    return price
 }
 
 // Insurance price based on car factor
@@ -192,7 +201,7 @@ function calculatePrice(info) {
 // parameter3 : object of value from input 
 // return : price 
 function CalculateCar(price, base, info) {
-    switch (info.carMake) {
+    switch (info.makeValue) {
         case "1":
             price = base * calculateOfCar(info)
             break;
@@ -206,11 +215,30 @@ function CalculateCar(price, base, info) {
     return price
 }
 
+// getting car model
+// paramet : car value
+// returt : car model
+function textCar(car) {
+    let text;
+    switch (car) {
+        case "1":
+            text = "پراید"
+            break;
+        case "2":
+            text = "اپتیما"
+            break;
+        case "3":
+            text = "پورشه"
+            break;
+    }
+    return text
+}
+
 // Discount of year
 // parameter : object of value from input 
 // return = The year chosen by the user - current year
 function yearDiscount(info) {
-    let year = info.carYear
+    let year = info.year
     year = currentYear() - year
     return year
 }
@@ -219,7 +247,7 @@ function yearDiscount(info) {
 // parameter : object of value from input 
 // output : The coefficient of cars
 function calculateOfCar(info) {
-    let carValue = info.carMake
+    let carValue = info.makeValue
     switch (carValue) {
         case "1":
             return config.carsPrace.make1
@@ -234,11 +262,44 @@ function calculateOfCar(info) {
 // parameter : object of value from input 
 // return : number type of insurance
 function CalculateLevl(info) {
-    let level = info.level
+    let level = info.levelValue
     if (level == 'basic') {
         // price = price + (price * 0.30)
         return config.typeOfInsurance.basic
     } else {
         return config.typeOfInsurance.complete
     }
+}
+
+// showing factor : create div for send factor to it, but before it show loader for 3sec
+// + paramt1 : price of insurance
+// + paramt2 : obj that put value and texts of inputs
+//   appendChild : Factor template
+function showFactor(price, info) {
+    const result = document.querySelector('#result');
+    // default we shouidn't have anything in result div
+    result.innerHTML = ""
+    const div = document.createElement('div')
+    // add template to div
+    div.innerHTML = templateFactor(price, info)
+    // select load image
+    const load = document.querySelector("#loading img")
+    load.style.display = 'block'
+    // after 3sec active Instructions
+    setTimeout(() => {
+        load.style.display = 'none'
+        result.appendChild(div)
+    }, 3000);
+}
+
+// template of insurace factor
+// + paramt1 : price of insurance
+// + paramt2 : obj that put value and texts of inputs
+function templateFactor(price, info) {
+    return `
+    <p class="header">خلاصه فاکتور</p>
+    <p>مدل خودرو :${info.carText}</p>
+    <p>سال ساخت :${info.year}</p>
+    <p>نوع بیمه :${info.textLevel}</p>
+    <p>قیمت :${price}</p>`
 }
