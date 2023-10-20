@@ -25,28 +25,16 @@ function checkSubmit(e) {
 
     // check form validity
     if (make === "" || year === "" || level === "") {
-        console.log("error :(");
         displayError("لطفا فرم را کامل پر کنید")
     } else {
-        // console.log(insuranceCase(make, year, level.value));
-
         let insuranse = {
             make: make,
             year: year,
             level: level
         }
-        calculatePrice(insuranse)
+        showFactor(calculatePrice(insuranse), insuranse)
     }
 }
-
-// value of form
-// function insuranceCase(inCarMake, inYear, inLevel) {
-//     return {
-//         carMake: inCarMake,
-//         Yera: inYear,
-//         level: inLevel
-//     }
-// }
 
 
 function calculatePrice(info) {
@@ -74,7 +62,6 @@ function calculatePrice(info) {
 
     // + Calculate Year
     // get the year
-
     // change persion string to english number
     let year = info.year
     diffrence = function (year) {
@@ -104,9 +91,7 @@ function calculatePrice(info) {
 
     let level = info.level
     price = calculateLevel(level, price)
-    console.log(price);
-
-
+    return price
 }
 
 function calculateLevel(level, price) {
@@ -190,6 +175,50 @@ function displayYears() {
         // send option to select element
         selectYear.appendChild(creartOption)
     }
+}
 
+
+// for showing facotr
+// paramt : price of insurance
+// paramt : obj of insurance (make, year, level)
+function showFactor(price, info) {
+    const result = document.querySelector('#result')
+    result.innerHTML = ""
+    const div = document.createElement('div')
+    let make = info.make
+    switch (make) {
+        case "1":
+            make = "پراید"
+            break;
+        case "2":
+            make = "اپتیما"
+            break;
+        case "3":
+            make = "پورشه"
+            break;
+    }
+
+    let level = info.level
+    if (level === "base") {
+        level = "ساده"
+    } else {
+        level = "کامل"
+    }
+
+    let loader = document.querySelector("#loading img")
+    loader.style.display = "block"
+
+    div.innerHTML = `<p class="header">خلاصه فاکتور</p>
+    <p>مدل ماشین :${make}</p>
+    <p>سال ساخت :${info.year}</p>
+    <p>نوع بیمه :${level}</p>
+    <p>قیمت بیمه :${price}</p>`
+
+
+
+    setTimeout(() => {
+        loader.style.display = "none"
+        result.appendChild(div)
+    }, 3000);
 
 }
